@@ -15,17 +15,17 @@ class MeuDadoEvent {
         this.Dado=Data;
         Pronto=true;
         notify();
-        }
     }
 
-public synchronized int carregar() {
-    while (!Pronto)
-    try {
-        wait();
-    } catch (InterruptedException e) { }
-    Pronto=false;
-    notify();
-    return this.Dado;
+    public synchronized int carregar() {
+        while (!Pronto)
+        try {
+            wait();
+        } catch (InterruptedException e) { }
+        Pronto=false;
+        notify();
+        return this.Dado;
+    }
 }
 
 class ProdutorEvent implements Runnable {
@@ -33,6 +33,7 @@ class ProdutorEvent implements Runnable {
     public ProdutorEvent(MeuDadoEvent dado) {
         this.dado=dado;
     }
+
     public void run() {
         int i;
         for(i=0;i<30;i++) {
@@ -44,6 +45,7 @@ class ProdutorEvent implements Runnable {
             } catch (InterruptedException e) { }
         }
     }
+
 }
 
 class ConsumidorEvent implements Runnable {
